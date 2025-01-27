@@ -185,9 +185,131 @@ Directly inspired by Dustin Brett's daedalOS. The portfolio loads as an interact
 
 ---
 
-## Next Steps
+## Chosen Concept: Desktop OS Simulation
 
-- [ ] Finalize which concept direction to go with (Terminal vs. Scroll Narrative vs. Computer Desktop vs. Hybrid)
-- [ ] Choose a color palette and typography pairing
-- [ ] Set up the project repo and start coding the HTML/CSS structure
-- [ ] Implement scroll animations and interactions
+I've decided to go with the **Computer Desktop Portfolio** concept, directly inspired by Dustin Brett's daedalOS. The portfolio will load as an interactive desktop environment where each section of the portfolio lives inside draggable, resizable windows that mimic a real operating system.
+
+### Why This Concept
+
+- The portfolio itself becomes the most impressive project on display
+- It's memorable and shareable, people will want to show others
+- It demonstrates real technical skill (window management, state handling, drag/drop)
+- It's genuinely fun to interact with
+- It sets me apart from every other developer with a standard scrolling portfolio
+
+---
+
+## MVP Requirements (Due 2/18)
+
+Based on the official portfolio requirements, here's what needs to be built, adapted to the desktop OS concept:
+
+### 1. About Me Window
+- My name and bio
+- Professional photo (if available)
+- Opens from a desktop icon labeled "About Me" or similar
+
+### 2. Projects Window
+- Carousel or grid display of completed projects
+- Screenshots/images of each application
+- Clicking a project card opens the live site
+- GitHub repo icon/link for each project
+- Could be styled like a "File Explorer" window browsing project folders
+
+### 3. Skills Window
+- Component displaying known languages and skills
+- Use tech logos/icons for visual appeal
+- Could be styled like a "System Info" or "Control Panel" window
+
+### 4. Contact Window
+- Form with subject and message fields
+- Sends email directly to me (will need a backend service like Formspree or EmailJS)
+- Could be styled like an "Email Client" window
+
+### 5. Resume
+- PDF download button
+- Could live in the Contact window, or be its own desktop icon that triggers a download
+- Alternatively, open a "PDF Viewer" window that displays the resume
+
+### Desktop Shell Components
+
+These are the OS simulation pieces that tie everything together:
+
+**Taskbar**
+- Fixed at the bottom of the screen
+- Shows currently open windows
+- Clock display
+- Maybe a "Start" button (could open a menu listing all available windows)
+
+**Desktop Icons**
+- Grid of clickable icons on the "wallpaper"
+- Each icon opens its corresponding window
+- Icons: About Me, Projects, Skills, Contact, Resume
+
+**Window System**
+- Draggable windows (click and drag title bar)
+- Resizable windows (drag corners/edges)
+- Minimize button (hides window, shows in taskbar)
+- Maximize button (fills screen)
+- Close button (removes window)
+- Windows stack on top of each other (z-index management)
+- Clicking a window brings it to front
+
+**Wallpaper**
+- Background image or gradient
+- Could be customizable as a stretch goal
+
+---
+
+## Build Plan (Slow and Steady)
+
+**Deadline: MVP by 2/18, buffer until 2/19**
+
+Taking it one piece at a time. Each day focuses on one small, completable task.
+
+### Week 1: Foundation
+- [ ] Day 1: Set up project structure (HTML, CSS, JS files)
+- [ ] Day 2: Build the desktop background and basic layout
+- [ ] Day 3: Create the taskbar component (static, no functionality yet)
+- [ ] Day 4: Build a single draggable window component
+- [ ] Day 5: Add window controls (close, minimize, maximize buttons)
+- [ ] Day 6: Implement window stacking (z-index on click)
+- [ ] Day 7: Create desktop icon grid layout
+
+### Week 2: Content Windows
+- [ ] Day 8: Build About Me window content
+- [ ] Day 9: Build Projects window with project cards
+- [ ] Day 10: Add project carousel or grid functionality
+- [ ] Day 11: Build Skills window with tech icons
+- [ ] Day 12: Build Contact window with form
+- [ ] Day 13: Connect contact form to email service
+- [ ] Day 14: Add Resume download functionality
+
+### Week 3: Polish and Launch
+- [ ] Day 15: Taskbar functionality (show open windows, click to focus)
+- [ ] Day 16: Window minimize/restore from taskbar
+- [ ] Day 17: Mobile responsiveness (simplified view for small screens)
+- [ ] Day 18: Testing, bug fixes, final polish
+- [ ] Day 19: Buffer day for debugging with classmates
+
+---
+
+## Technical Decisions to Make
+
+- **Vanilla JS vs Framework**: Could build with vanilla JS/CSS for simplicity, or use React for cleaner state management of windows
+- **CSS Strategy**: CSS Grid for desktop icons, Flexbox for window internals, CSS variables for theming
+- **Drag Library**: Could use native HTML5 drag, or a library like interact.js for smoother drag/resize
+- **Contact Form Backend**: Formspree, EmailJS, or Netlify Forms are all good free options
+- **Hosting**: GitHub Pages, Netlify, or Vercel
+
+---
+
+## Stretch Goals (After MVP)
+
+- Boot sequence animation (fake loading screen before desktop appears)
+- Start menu that lists all windows
+- Right-click context menus
+- Window snap to edges (like Windows 10/11)
+- Multiple wallpaper options / theme switcher
+- Sound effects on window open/close
+- A working "Terminal" app window
+- Easter eggs hidden in the desktop
