@@ -1,0 +1,68 @@
+/*
+  CSS Reset
+
+  This removes all the default browser styling so I have a clean slate
+  to work with. Every browser has slightly different defaults, so this
+  makes sure things look the same everywhere.
+*/
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-desktop-bg);
+  line-height: 1.4;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Remove default button styles */
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+/* Remove default link styles */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Remove default list styles */
+ul, ol {
+  list-style: none;
+}
+
+/* Make images easier to work with */
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Remove default input styles */
+input, textarea {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Disable text selection on UI elements (feels more like an OS) */
+.no-select {
+  user-select: none;
+  -webkit-user-select: none;
+}

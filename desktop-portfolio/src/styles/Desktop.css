@@ -1,0 +1,108 @@
+/*
+  Desktop Component Styles
+
+  This is the main container that holds everything - the wallpaper,
+  the desktop icons, and acts as the area where windows can be dragged around.
+  It fills the entire screen minus the taskbar at the bottom.
+*/
+
+.desktop {
+  position: relative;
+  width: 100%;
+  height: calc(100vh - var(--taskbar-height));
+  background-color: var(--color-desktop-bg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  overflow: hidden;
+}
+
+/*
+  Desktop Icons Container
+
+  Using CSS Grid to lay out the icons in a grid pattern, similar to how
+  Windows and macOS arrange desktop icons. The icons flow from top to bottom,
+  then wrap to the next column.
+*/
+
+.desktop__icons {
+  position: absolute;
+  top: var(--icon-grid-gap);
+  left: var(--icon-grid-gap);
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-rows: repeat(auto-fill, calc(var(--icon-size) + 40px));
+  gap: var(--icon-grid-gap);
+  max-height: calc(100% - var(--icon-grid-gap) * 2);
+  padding: 8px;
+}
+
+/*
+  Individual Desktop Icon
+
+  Each icon is a clickable element with an image and label.
+  I'm making them look like the classic Windows desktop icons.
+*/
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  width: calc(var(--icon-size) + 24px);
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.desktop-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.desktop-icon:active,
+.desktop-icon--selected {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.desktop-icon__image {
+  width: var(--icon-size);
+  height: var(--icon-size);
+  margin-bottom: 4px;
+  /* Placeholder styling until we add real icons */
+  background-color: var(--color-primary);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+}
+
+.desktop-icon__label {
+  font-size: var(--font-size-small);
+  text-align: center;
+  color: var(--color-text-primary);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  word-wrap: break-word;
+  max-width: 100%;
+}
+
+/*
+  Windows Container
+
+  This is where all the open windows live. It's positioned absolutely
+  so windows can be placed anywhere on the desktop.
+*/
+
+.desktop__windows {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.desktop__windows > * {
+  pointer-events: auto;
+}

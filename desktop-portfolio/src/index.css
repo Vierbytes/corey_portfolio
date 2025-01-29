@@ -1,0 +1,9 @@
+/*
+  Main Entry Point CSS
+
+  This file imports the CSS reset and variables, then applies any
+  global styles needed. Keeping the imports here keeps main.jsx clean.
+*/
+
+@import './styles/variables.css';
+@import './styles/reset.css';

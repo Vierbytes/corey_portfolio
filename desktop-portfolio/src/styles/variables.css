@@ -1,0 +1,68 @@
+/*
+  CSS Variables for the Desktop Portfolio
+
+  I'm setting up a theming system here so I can easily change colors
+  throughout the whole site by just updating these values. This is
+  inspired by how real operating systems handle themes.
+
+  The color scheme is going for a dark, modern look with blue accents,
+  similar to Windows 10/11 but with my own twist.
+*/
+
+:root {
+  /* Primary colors - the main accent color for highlights and focus states */
+  --color-primary: #0078d4;
+  --color-primary-hover: #1a86d9;
+  --color-primary-active: #006cc1;
+
+  /* Background colors - for the desktop, windows, and taskbar */
+  --color-desktop-bg: #0c0c0c;
+  --color-window-bg: #1e1e1e;
+  --color-window-header: #2d2d2d;
+  --color-taskbar-bg: rgba(30, 30, 30, 0.85);
+
+  /* Text colors */
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #a0a0a0;
+  --color-text-muted: #6e6e6e;
+
+  /* Border and divider colors */
+  --color-border: #3d3d3d;
+  --color-border-light: #4d4d4d;
+
+  /* Window control button colors (the minimize, maximize, close buttons) */
+  --color-close-btn: #e81123;
+  --color-close-btn-hover: #f1707a;
+  --color-minimize-btn-hover: rgba(255, 255, 255, 0.1);
+  --color-maximize-btn-hover: rgba(255, 255, 255, 0.1);
+
+  /* Shadows - for that floating window effect */
+  --shadow-window: 0 8px 32px rgba(0, 0, 0, 0.4);
+  --shadow-window-focused: 0 12px 48px rgba(0, 0, 0, 0.5);
+  --shadow-taskbar: 0 -2px 10px rgba(0, 0, 0, 0.3);
+
+  /* Sizing */
+  --taskbar-height: 48px;
+  --window-header-height: 32px;
+  --window-border-radius: 8px;
+  --icon-size: 48px;
+  --icon-grid-gap: 8px;
+
+  /* Transitions - keeping things smooth */
+  --transition-fast: 0.1s ease;
+  --transition-normal: 0.2s ease;
+  --transition-slow: 0.3s ease;
+
+  /* Z-index layers - organizing what sits on top of what */
+  --z-desktop: 1;
+  --z-window-base: 100;
+  --z-taskbar: 1000;
+  --z-context-menu: 2000;
+  --z-modal: 3000;
+
+  /* Font settings */
+  --font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  --font-size-small: 12px;
+  --font-size-normal: 14px;
+  --font-size-large: 16px;
+}

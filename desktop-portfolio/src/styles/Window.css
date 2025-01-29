@@ -1,0 +1,208 @@
+/*
+  Window Component Styles
+
+  This is the core window component that makes the OS feel real.
+  Each window has a header with controls (minimize, maximize, close),
+  and a content area that can hold any component.
+
+  I learned that the key to making windows feel authentic is getting
+  the header buttons and the subtle shadows right.
+*/
+
+.window {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  min-width: 300px;
+  min-height: 200px;
+  background-color: var(--color-window-bg);
+  border-radius: var(--window-border-radius);
+  box-shadow: var(--shadow-window);
+  overflow: hidden;
+  transition: box-shadow var(--transition-fast);
+}
+
+/* When the window is focused/active, it gets a stronger shadow */
+.window--focused {
+  box-shadow: var(--shadow-window-focused);
+}
+
+/* Maximized window fills the entire desktop area */
+.window--maximized {
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0;
+}
+
+/* Minimized windows are hidden */
+.window--minimized {
+  display: none;
+}
+
+/*
+  Window Header
+
+  This is the title bar that you drag to move the window.
+  It contains the window title and the control buttons.
+*/
+
+.window__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--window-header-height);
+  padding: 0 8px;
+  background-color: var(--color-window-header);
+  cursor: grab;
+  user-select: none;
+}
+
+.window__header:active {
+  cursor: grabbing;
+}
+
+.window__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-small);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.window__title-icon {
+  width: 16px;
+  height: 16px;
+  flex-shrink: 0;
+}
+
+/*
+  Window Control Buttons
+
+  The minimize, maximize, and close buttons in the top right.
+  Close button is red, others are subtle until hovered.
+*/
+
+.window__controls {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.window__control-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 100%;
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.window__control-btn:hover {
+  background-color: var(--color-minimize-btn-hover);
+}
+
+.window__control-btn--close:hover {
+  background-color: var(--color-close-btn);
+}
+
+/* Simple icons using CSS shapes for now */
+.window__control-btn svg {
+  width: 10px;
+  height: 10px;
+}
+
+/*
+  Window Content
+
+  The main area where the actual content goes.
+  It's set to grow and fill the remaining space.
+*/
+
+.window__content {
+  flex: 1;
+  overflow: auto;
+  padding: 16px;
+  background-color: var(--color-window-bg);
+}
+
+/*
+  Resize Handles
+
+  These are invisible handles on the edges and corners of the window
+  that let you resize it. They'll be implemented with JS later.
+*/
+
+.window__resize-handle {
+  position: absolute;
+  background: transparent;
+}
+
+.window__resize-handle--n {
+  top: 0;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  cursor: n-resize;
+}
+
+.window__resize-handle--s {
+  bottom: 0;
+  left: 8px;
+  right: 8px;
+  height: 4px;
+  cursor: s-resize;
+}
+
+.window__resize-handle--e {
+  top: 8px;
+  right: 0;
+  bottom: 8px;
+  width: 4px;
+  cursor: e-resize;
+}
+
+.window__resize-handle--w {
+  top: 8px;
+  left: 0;
+  bottom: 8px;
+  width: 4px;
+  cursor: w-resize;
+}
+
+.window__resize-handle--ne {
+  top: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  cursor: ne-resize;
+}
+
+.window__resize-handle--nw {
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  cursor: nw-resize;
+}
+
+.window__resize-handle--se {
+  bottom: 0;
+  right: 0;
+  width: 8px;
+  height: 8px;
+  cursor: se-resize;
+}
+
+.window__resize-handle--sw {
+  bottom: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  cursor: sw-resize;
+}

@@ -1,0 +1,156 @@
+/*
+  Taskbar Component Styles
+
+  The taskbar sits at the bottom of the screen, just like Windows.
+  It shows open windows and has a clock on the right side.
+  Using backdrop-filter for that nice frosted glass effect.
+*/
+
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: var(--taskbar-height);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 8px;
+  background-color: var(--color-taskbar-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: var(--shadow-taskbar);
+  z-index: var(--z-taskbar);
+  user-select: none;
+}
+
+/*
+  Start Button (optional, for stretch goal)
+
+  A button on the left that could open a start menu later.
+*/
+
+.taskbar__start {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 40px;
+  border-radius: 4px;
+  transition: background-color var(--transition-fast);
+}
+
+.taskbar__start:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.taskbar__start-icon {
+  width: 24px;
+  height: 24px;
+}
+
+/*
+  Open Windows Section
+
+  Shows buttons for each open window. Clicking brings that window to focus.
+*/
+
+.taskbar__windows {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex: 1;
+  margin-left: 8px;
+  overflow-x: auto;
+}
+
+.taskbar__window-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 12px;
+  border-radius: 4px;
+  background-color: transparent;
+  transition: background-color var(--transition-fast);
+  max-width: 200px;
+}
+
+.taskbar__window-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Active/focused window gets a highlight */
+.taskbar__window-btn--active {
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Indicator line under the button for open windows */
+.taskbar__window-btn::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 3px;
+  background-color: var(--color-primary);
+  border-radius: 2px;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.taskbar__window-btn--active::after {
+  opacity: 1;
+}
+
+.taskbar__window-btn-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+}
+
+.taskbar__window-btn-title {
+  font-size: var(--font-size-small);
+  color: var(--color-text-primary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/*
+  System Tray (right side)
+
+  Contains the clock and potentially other system indicators.
+*/
+
+.taskbar__tray {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 8px;
+}
+
+.taskbar__clock {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background-color var(--transition-fast);
+}
+
+.taskbar__clock:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.taskbar__time {
+  font-size: var(--font-size-small);
+  font-variant-numeric: tabular-nums;
+  color: var(--color-text-primary);
+}
+
+.taskbar__date {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+}
