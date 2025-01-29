@@ -1,18 +1,20 @@
 /*
   Window Component
 
-  This is a reusable window component that can be dragged, resized,
-  minimized, maximized, and closed. It's the core of the desktop OS feel.
+  Using react-draggable to handle all the drag logic. This simplifies
+  the code a lot since the library handles mouse tracking, bounds,
+  and touch support automatically.
 
-  The dragging is implemented using mouse events. When you mousedown on
-  the header, it starts tracking mouse movement and updates the position.
+  The 'handle' prop tells it to only drag when clicking the header,
+  and 'cancel' prevents dragging when clicking the control buttons.
 
-  I spent a while figuring out the dragging logic. The key insight was
-  that you need to track the offset between where you clicked and the
-  window's top-left corner, not just the mouse position directly.
+  Important: react-draggable uses CSS transforms for positioning, so
+  we don't set top/left on the window itself. The Draggable wrapper
+  handles all positioning through transform: translate().
 */
 
-import { useRef, useEffect } from 'react';
+import { useRef } from 'react';
+import Draggable from 'react-draggable';
 import '../styles/Window.css';
 
 function Window({
@@ -33,55 +35,8 @@ function Window({
   onSizeChange,
   children,
 }) {
-  const windowRef = useRef(null);
-  const isDragging = useRef(false);
-  const dragOffset = useRef({ x: 0, y: 0 });
-
-  // Handle dragging
-  const handleMouseDown = (e) => {
-    // Only start drag if clicking on the header (not the buttons)
-    if (e.target.closest('.window__controls')) return;
-
-    isDragging.current = true;
-    dragOffset.current = {
-      x: e.clientX - position.x,
-      y: e.clientY - position.y,
-    };
-
-    // Bring window to front when starting to drag
-    onFocus();
-
-    // Add listeners to document so we can track mouse even outside the window
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseup', handleMouseUp);
-  };
-
-  const handleMouseMove = (e) => {
-    if (!isDragging.current) return;
-
-    const newX = e.clientX - dragOffset.current.x;
-    const newY = e.clientY - dragOffset.current.y;
-
-    // Keep window within bounds (don't let it go off screen)
-    const boundedX = Math.max(0, newX);
-    const boundedY = Math.max(0, newY);
-
-    onPositionChange({ x: boundedX, y: boundedY });
-  };
-
-  const handleMouseUp = () => {
-    isDragging.current = false;
-    document.removeEventListener('mousemove', handleMouseMove);
-    document.removeEventListener('mouseup', handleMouseUp);
-  };
-
-  // Cleanup event listeners on unmount
-  useEffect(() => {
-    return () => {
-      document.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, []);
+  // Ref needed for react-draggable to work with React 18+
+  const nodeRef = useRef(null);
 
   // Build the class names based on state
   const windowClasses = [
@@ -93,26 +48,35 @@ function Window({
     .filter(Boolean)
     .join(' ');
 
-  // Style object for positioning
+  // Style object for sizing and z-index (no top/left, draggable handles that)
   const windowStyle = isMaximized
     ? { zIndex }
     : {
-        left: position.x,
-        top: position.y,
         width: size.width,
         height: size.height,
         zIndex,
       };
 
-  return (
+  // Called when dragging stops, updates position in parent state
+  const handleDragStop = (_e, data) => {
+    onPositionChange({ x: data.x, y: data.y });
+  };
+
+  // If minimized, don't render anything
+  if (isMinimized) {
+    return null;
+  }
+
+  // The window content
+  const windowContent = (
     <div
-      ref={windowRef}
+      ref={nodeRef}
       className={windowClasses}
       style={windowStyle}
       onMouseDown={onFocus}
     >
-      {/* Window Header (title bar) */}
-      <div className="window__header no-select" onMouseDown={handleMouseDown}>
+      {/* Window Header (title bar) - this is the drag handle */}
+      <div className="window__header no-select">
         <div className="window__title">
           <span className="window__title-icon">{icon}</span>
           <span>{title}</span>
@@ -136,13 +100,11 @@ function Window({
             aria-label={isMaximized ? 'Restore' : 'Maximize'}
           >
             {isMaximized ? (
-              // Restore icon (two overlapping squares)
               <svg viewBox="0 0 10 10" fill="none" stroke="currentColor">
                 <rect x="2" y="0" width="8" height="8" strokeWidth="1" />
                 <rect x="0" y="2" width="8" height="8" strokeWidth="1" />
               </svg>
             ) : (
-              // Maximize icon (single square)
               <svg viewBox="0 0 10 10" fill="none" stroke="currentColor">
                 <rect x="0" y="0" width="10" height="10" strokeWidth="1" />
               </svg>
@@ -170,7 +132,7 @@ function Window({
         )}
       </div>
 
-      {/* Resize handles (visual only for now, functionality coming later) */}
+      {/* Resize handles (visual only for now) */}
       {!isMaximized && (
         <>
           <div className="window__resize-handle window__resize-handle--n" />
@@ -184,6 +146,26 @@ function Window({
         </>
       )}
     </div>
+  );
+
+  // If maximized, don't wrap with Draggable (can't drag a maximized window)
+  if (isMaximized) {
+    return windowContent;
+  }
+
+  // Wrap with Draggable for normal windows
+  return (
+    <Draggable
+      nodeRef={nodeRef}
+      handle=".window__header"
+      cancel=".window__controls"
+      position={position}
+      onStop={handleDragStop}
+      onStart={onFocus}
+      bounds="parent"
+    >
+      {windowContent}
+    </Draggable>
   );
 }
 

@@ -10,6 +10,10 @@
 */
 
 .window {
+  /*
+    Using position: absolute here so react-draggable's transform positioning works.
+    The Draggable component uses transform: translate(x, y) to move the window.
+  */
   position: absolute;
   display: flex;
   flex-direction: column;

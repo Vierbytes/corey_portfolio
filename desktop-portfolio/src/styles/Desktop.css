@@ -91,7 +91,9 @@
   Windows Container
 
   This is where all the open windows live. It's positioned absolutely
-  so windows can be placed anywhere on the desktop.
+  so windows can be placed anywhere on the desktop. The pointer-events
+  setup lets clicks pass through to icons while still allowing window
+  interaction.
 */
 
 .desktop__windows {
@@ -100,9 +102,13 @@
   left: 0;
   width: 100%;
   height: 100%;
+  /* Let clicks pass through to desktop icons beneath */
   pointer-events: none;
+  /* Needed for react-draggable bounds="parent" to work */
+  overflow: hidden;
 }
 
-.desktop__windows > * {
+/* Re-enable pointer events on the actual windows */
+.desktop__windows .window {
   pointer-events: auto;
 }

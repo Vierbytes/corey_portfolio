@@ -169,16 +169,17 @@ function Desktop() {
         windows={windows}
         focusedWindowId={focusedWindowId}
         onWindowClick={(id) => {
-          const window = windows.find((w) => w.id === id);
-          if (window?.isMinimized) {
-            // Restore minimized window
-            setWindows(
-              windows.map((w) =>
-                w.id === id ? { ...w, isMinimized: false } : w
-              )
-            );
-          }
-          focusWindow(id);
+          // Restore minimized window AND bring to front in one state update
+          // This fixes the issue where focusWindow was using stale state
+          setWindows(
+            windows.map((w) =>
+              w.id === id
+                ? { ...w, isMinimized: false, zIndex: topZIndex + 1 }
+                : w
+            )
+          );
+          setTopZIndex(topZIndex + 1);
+          setFocusedWindowId(id);
         }}
       />
     </>
