@@ -12,16 +12,38 @@
 import { useState } from 'react';
 import Window from './Window';
 import Taskbar from './Taskbar';
+import AboutMe from './windows/AboutMe';
+import Projects from './windows/Projects';
+import Skills from './windows/Skills';
+import Contact from './windows/Contact';
+import Resume from './windows/Resume';
+import {
+  AboutMeIcon,
+  ProjectsIcon,
+  SkillsIcon,
+  ContactIcon,
+  ResumeIcon,
+} from './icons/DesktopIcons';
 import '../styles/Desktop.css';
 
+// Map each window id to its content component
+// This keeps the rendering logic clean - just look up the id and render
+const WINDOW_CONTENT = {
+  about: <AboutMe />,
+  projects: <Projects />,
+  skills: <Skills />,
+  contact: <Contact />,
+  resume: <Resume />,
+};
+
 // Configuration for all the desktop icons and their corresponding windows
-// Each icon has an id, title, and icon (emoji for now, will replace with images later)
+// Each icon uses an inline SVG component for that authentic OS look
 const DESKTOP_APPS = [
-  { id: 'about', title: 'About Me', icon: '👤' },
-  { id: 'projects', title: 'Projects', icon: '📁' },
-  { id: 'skills', title: 'Skills', icon: '⚡' },
-  { id: 'contact', title: 'Contact', icon: '✉️' },
-  { id: 'resume', title: 'Resume', icon: '📄' },
+  { id: 'about', title: 'About Me', icon: <AboutMeIcon /> },
+  { id: 'projects', title: 'Projects', icon: <ProjectsIcon /> },
+  { id: 'skills', title: 'Skills', icon: <SkillsIcon /> },
+  { id: 'contact', title: 'Contact', icon: <ContactIcon /> },
+  { id: 'resume', title: 'Resume', icon: <ResumeIcon /> },
 ];
 
 function Desktop() {
@@ -159,7 +181,9 @@ function Desktop() {
               onMaximize={() => toggleMaximize(window.id)}
               onPositionChange={(pos) => updateWindowPosition(window.id, pos)}
               onSizeChange={(size) => updateWindowSize(window.id, size)}
-            />
+            >
+              {WINDOW_CONTENT[window.id]}
+            </Window>
           ))}
         </div>
       </div>
