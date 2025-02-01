@@ -12,6 +12,8 @@
 import { useState } from 'react';
 import Window from './Window';
 import Taskbar from './Taskbar';
+import StartMenu from './StartMenu';
+import ContextMenu from './ContextMenu';
 import AboutMe from './windows/AboutMe';
 import Projects from './windows/Projects';
 import Skills from './windows/Skills';
@@ -57,6 +59,12 @@ function Desktop() {
   // Counter to assign z-index values (higher = on top)
   const [topZIndex, setTopZIndex] = useState(100);
 
+  // Start menu toggle
+  const [showStartMenu, setShowStartMenu] = useState(false);
+
+  // Right-click context menu position (null = hidden, { x, y } = visible)
+  const [contextMenu, setContextMenu] = useState(null);
+
   // Opens a new window or focuses an existing one
   const openWindow = (appId) => {
     const app = DESKTOP_APPS.find((a) => a.id === appId);
@@ -97,7 +105,7 @@ function Desktop() {
     }
   };
 
-  // Brings a window to the front
+  // Brings a window to the front and closes any open menus
   const focusWindow = (windowId) => {
     setWindows(
       windows.map((w) =>
@@ -106,6 +114,8 @@ function Desktop() {
     );
     setTopZIndex(topZIndex + 1);
     setFocusedWindowId(windowId);
+    setShowStartMenu(false);
+    setContextMenu(null);
   };
 
   // Closes a window
@@ -139,21 +149,40 @@ function Desktop() {
 
   // Updates window position (called during drag)
   const updateWindowPosition = (windowId, position) => {
-    setWindows(
-      windows.map((w) => (w.id === windowId ? { ...w, position } : w))
+    setWindows((prev) =>
+      prev.map((w) => (w.id === windowId ? { ...w, position } : w))
     );
   };
 
   // Updates window size (called during resize)
   const updateWindowSize = (windowId, size) => {
-    setWindows(
-      windows.map((w) => (w.id === windowId ? { ...w, size } : w))
+    setWindows((prev) =>
+      prev.map((w) => (w.id === windowId ? { ...w, size } : w))
+    );
+  };
+
+  // Updates both size and position at once (called during resize from north/west edges)
+  // This avoids the stale state issue where two separate setWindows calls would
+  // overwrite each other during rapid mousemove events
+  const updateWindowResize = (windowId, size, position) => {
+    setWindows((prev) =>
+      prev.map((w) => (w.id === windowId ? { ...w, size, position } : w))
     );
   };
 
   return (
     <>
-      <div className="desktop">
+      <div
+        className="desktop"
+        onContextMenu={(e) => {
+          // Only show context menu when right-clicking the desktop background
+          // not when right-clicking inside a window or on an icon
+          if (e.target.closest('.window') || e.target.closest('.desktop-icon')) return;
+          e.preventDefault();
+          setContextMenu({ x: e.clientX, y: e.clientY });
+          setShowStartMenu(false);
+        }}
+      >
         {/* Desktop Icons */}
         <div className="desktop__icons">
           {DESKTOP_APPS.map((app) => (
@@ -181,6 +210,7 @@ function Desktop() {
               onMaximize={() => toggleMaximize(window.id)}
               onPositionChange={(pos) => updateWindowPosition(window.id, pos)}
               onSizeChange={(size) => updateWindowSize(window.id, size)}
+              onResize={(size, pos) => updateWindowResize(window.id, size, pos)}
             >
               {WINDOW_CONTENT[window.id]}
             </Window>
@@ -188,10 +218,40 @@ function Desktop() {
         </div>
       </div>
 
+      {/* Start Menu - shows when the start button is clicked */}
+      {showStartMenu && (
+        <StartMenu
+          apps={DESKTOP_APPS}
+          onAppClick={(id) => {
+            openWindow(id);
+            setShowStartMenu(false);
+          }}
+          onClose={() => setShowStartMenu(false)}
+        />
+      )}
+
+      {/* Right-click Context Menu */}
+      {contextMenu && (
+        <ContextMenu
+          x={contextMenu.x}
+          y={contextMenu.y}
+          onClose={() => setContextMenu(null)}
+          onOpenAbout={() => {
+            openWindow('about');
+            setContextMenu(null);
+          }}
+        />
+      )}
+
       {/* Taskbar */}
       <Taskbar
         windows={windows}
         focusedWindowId={focusedWindowId}
+        onStartClick={() => {
+          setShowStartMenu(!showStartMenu);
+          setContextMenu(null);
+        }}
+        isStartMenuOpen={showStartMenu}
         onWindowClick={(id) => {
           // Restore minimized window AND bring to front in one state update
           // This fixes the issue where focusWindow was using stale state

@@ -22,7 +22,7 @@
   background-color: var(--color-window-bg);
   border-radius: var(--window-border-radius);
   box-shadow: var(--shadow-window);
-  overflow: hidden;
+  /* overflow: hidden moved to header and content so resize handles aren't clipped */
   transition: box-shadow var(--transition-fast);
 }
 
@@ -59,6 +59,8 @@
   height: var(--window-header-height);
   padding: 0 8px;
   background-color: var(--color-window-header);
+  border-radius: var(--window-border-radius) var(--window-border-radius) 0 0;
+  overflow: hidden;
   cursor: grab;
   user-select: none;
 }
@@ -141,6 +143,8 @@
   overflow: auto;
   padding: 16px;
   background-color: var(--color-window-bg);
+  /* Clip content so it doesn't bleed past the window edges */
+  border-radius: 0 0 var(--window-border-radius) var(--window-border-radius);
 }
 
 /*
@@ -150,71 +154,81 @@
   that let you resize it. They'll be implemented with JS later.
 */
 
+/*
+  Resize handles need to be on top of everything in the window so they
+  can be grabbed. Made them a bit bigger (6px edges, 12px corners) so
+  they're actually possible to click on. They extend slightly outside
+  the window boundary which is why we removed overflow:hidden from .window.
+*/
+
 .window__resize-handle {
   position: absolute;
   background: transparent;
+  z-index: 10;
 }
 
+/* Edge handles - 6px wide/tall for easier grabbing */
 .window__resize-handle--n {
-  top: 0;
-  left: 8px;
-  right: 8px;
-  height: 4px;
+  top: -3px;
+  left: 12px;
+  right: 12px;
+  height: 6px;
   cursor: n-resize;
 }
 
 .window__resize-handle--s {
-  bottom: 0;
-  left: 8px;
-  right: 8px;
-  height: 4px;
+  bottom: -3px;
+  left: 12px;
+  right: 12px;
+  height: 6px;
   cursor: s-resize;
 }
 
 .window__resize-handle--e {
-  top: 8px;
-  right: 0;
-  bottom: 8px;
-  width: 4px;
+  top: 12px;
+  right: -3px;
+  bottom: 12px;
+  width: 6px;
   cursor: e-resize;
 }
 
 .window__resize-handle--w {
-  top: 8px;
-  left: 0;
-  bottom: 8px;
-  width: 4px;
+  top: 12px;
+  left: -3px;
+  bottom: 12px;
+  width: 6px;
   cursor: w-resize;
 }
 
+/* Corner handles - 12px squares for easy corner grabs */
 .window__resize-handle--ne {
-  top: 0;
-  right: 0;
-  width: 8px;
-  height: 8px;
+  top: -3px;
+  right: -3px;
+  width: 12px;
+  height: 12px;
   cursor: ne-resize;
 }
 
 .window__resize-handle--nw {
-  top: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
+  top: -3px;
+  left: -3px;
+  width: 12px;
+  height: 12px;
   cursor: nw-resize;
 }
 
 .window__resize-handle--se {
-  bottom: 0;
-  right: 0;
-  width: 8px;
-  height: 8px;
+  bottom: -3px;
+  right: -3px;
+  width: 12px;
+  height: 12px;
   cursor: se-resize;
 }
 
 .window__resize-handle--sw {
-  bottom: 0;
-  left: 0;
-  width: 8px;
-  height: 8px;
+  bottom: -3px;
+  left: -3px;
+  width: 12px;
+  height: 12px;
   cursor: sw-resize;
 }
