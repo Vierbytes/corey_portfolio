@@ -1,0 +1,59 @@
+/*
+  Context Menu Styles
+
+  Right-click menu that appears at the cursor position on the desktop.
+  Styled to look like a Windows right-click menu - dark panel with
+  a subtle border and hover highlights.
+*/
+
+.context-menu {
+  position: fixed;
+  min-width: 200px;
+  background-color: rgba(32, 32, 32, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+  z-index: var(--z-context-menu);
+  padding: 4px 0;
+  animation: contextMenuFadeIn 0.1s ease-out;
+}
+
+/* Quick fade in when the menu appears */
+@keyframes contextMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Each menu item is a full-width button */
+.context-menu__item {
+  display: block;
+  width: 100%;
+  padding: 8px 24px;
+  font-size: var(--font-size-normal);
+  color: var(--color-text-primary);
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+.context-menu__item:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.context-menu__item:active {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+/* Thin line between menu sections */
+.context-menu__divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 4px 8px;
+}
