@@ -42,7 +42,7 @@ function AboutMe() {
               GitHub
             </a>
             <a
-              href="https://linkedin.com/in/coreylindsey"
+              href="https://www.linkedin.com/in/coreyrlindsey/"
               target="_blank"
               rel="noopener noreferrer"
               className="about-me__link"
