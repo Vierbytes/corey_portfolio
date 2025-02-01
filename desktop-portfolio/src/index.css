@@ -8,3 +8,6 @@
 @import './styles/variables.css';
 @import './styles/reset.css';
 @import './styles/WindowContent.css';
+@import './styles/BootScreen.css';
+@import './styles/StartMenu.css';
+@import './styles/ContextMenu.css';
