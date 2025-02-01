@@ -69,13 +69,15 @@
   width: var(--icon-size);
   height: var(--icon-size);
   margin-bottom: 4px;
-  /* Placeholder styling until we add real icons */
-  background-color: var(--color-primary);
-  border-radius: 8px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 24px;
+}
+
+/* Make sure SVG icons inside the desktop icon fill the container */
+.desktop-icon__image svg {
+  width: 100%;
+  height: 100%;
 }
 
 .desktop-icon__label {
