@@ -1,0 +1,135 @@
+/*
+  Start Menu Styles
+
+  The start menu slides up from the bottom-left, right above the taskbar.
+  It has a frosted glass look to match the taskbar and window styling.
+  The layout is simple - profile on top, app list below.
+*/
+
+.start-menu {
+  position: fixed;
+  bottom: var(--taskbar-height);
+  left: 0;
+  width: 280px;
+  background-color: rgba(32, 32, 32, 0.95);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--color-border);
+  border-bottom: none;
+  border-radius: var(--window-border-radius) var(--window-border-radius) 0 0;
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.4);
+  z-index: var(--z-context-menu);
+  animation: startMenuSlideUp 0.15s ease-out;
+  overflow: hidden;
+}
+
+/* Slide up animation when the menu opens */
+@keyframes startMenuSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/*
+  Profile Section
+  Shows the user's initials in a circle and their name/title.
+*/
+
+.start-menu__profile {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+}
+
+.start-menu__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--color-primary);
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-normal);
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.start-menu__user-info {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.start-menu__user-name {
+  font-size: var(--font-size-normal);
+  color: var(--color-text-primary);
+  font-weight: 500;
+}
+
+.start-menu__user-title {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+}
+
+/* Thin line between profile and apps */
+.start-menu__divider {
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 0 12px;
+}
+
+/*
+  App List
+  Each app is a button with an icon and title, full width.
+*/
+
+.start-menu__apps {
+  padding: 8px 0;
+}
+
+.start-menu__app-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 10px 16px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-normal);
+  transition: background-color var(--transition-fast);
+  text-align: left;
+}
+
+.start-menu__app-btn:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.start-menu__app-btn:active {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.start-menu__app-icon {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+}
+
+/* SVG icons scale to fit the 24x24 container */
+.start-menu__app-icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.start-menu__app-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

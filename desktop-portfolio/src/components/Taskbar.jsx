@@ -8,12 +8,15 @@
   The clock updates every second using setInterval inside useEffect.
   I had to remember to clean up the interval when the component unmounts
   to avoid memory leaks.
+
+  The start button now opens the start menu - it calls onStartClick
+  which is handled by the Desktop component.
 */
 
 import { useState, useEffect } from 'react';
 import '../styles/Taskbar.css';
 
-function Taskbar({ windows, focusedWindowId, onWindowClick }) {
+function Taskbar({ windows, focusedWindowId, onWindowClick, onStartClick, isStartMenuOpen }) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Update the clock every second
@@ -46,9 +49,13 @@ function Taskbar({ windows, focusedWindowId, onWindowClick }) {
 
   return (
     <div className="taskbar no-select">
-      {/* Start button placeholder (for future start menu) */}
-      <button className="taskbar__start" aria-label="Start menu">
-        <span className="taskbar__start-icon">⊞</span>
+      {/* Start button - opens the start menu */}
+      <button
+        className={`taskbar__start ${isStartMenuOpen ? 'taskbar__start--active' : ''}`}
+        aria-label="Start menu"
+        onClick={onStartClick}
+      >
+        <img className="taskbar__start-icon" src="/icons8-windows.svg" alt="Start" />
       </button>
 
       {/* Open windows */}
