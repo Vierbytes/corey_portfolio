@@ -24,14 +24,28 @@ export const ACCENT_COLORS = [
   { name: 'Pink', value: '#ea005e', hover: '#ee1a6e', active: '#d40054' },
 ];
 
-// Wallpaper options - just solid colors for now
-// Could add image wallpapers later by putting them in public/wallpapers/
+// Wallpaper options - solid colors and animated wallpapers from public/wallpapers/
+// I found some cool pixel art gifs that give it a chill desktop vibe
 export const WALLPAPER_OPTIONS = [
+  // Solid colors
   { id: 'default', label: 'Default Dark', type: 'solid', value: '#0c0c0c' },
   { id: 'solid-dark-blue', label: 'Dark Blue', type: 'solid', value: '#0a1628' },
   { id: 'solid-dark-purple', label: 'Dark Purple', type: 'solid', value: '#1a0a28' },
   { id: 'solid-teal', label: 'Teal', type: 'solid', value: '#0a2828' },
   { id: 'light-default', label: 'Light Gray', type: 'solid', value: '#f0f0f0' },
+  // Animated wallpapers from public/wallpapers/
+  { id: 'dance', label: 'Dance', type: 'image', value: '/wallpapers/dance.gif' },
+  { id: 'dancedance', label: 'Dance Dance', type: 'image', value: '/wallpapers/dancedance.webp' },
+  { id: 'luffyspin', label: 'Luffy Spin', type: 'image', value: '/wallpapers/luffyspin.gif' },
+  { id: 'nightpoke', label: 'Night Poke', type: 'image', value: '/wallpapers/nightpoke.gif' },
+  { id: 'nightstroll', label: 'Night Stroll', type: 'image', value: '/wallpapers/nightstroll.gif' },
+  { id: 'nighttrain', label: 'Night Train', type: 'image', value: '/wallpapers/nighttrain.gif' },
+  { id: 'nkylfayx', label: 'Pixel City', type: 'image', value: '/wallpapers/nkylfayx2fye1.gif' },
+  { id: 'picnic', label: 'Picnic', type: 'image', value: '/wallpapers/picnic.gif' },
+  { id: 'rain', label: 'Rain', type: 'image', value: '/wallpapers/rain.gif' },
+  { id: 'skyline', label: 'Skyline', type: 'image', value: '/wallpapers/skyline.gif' },
+  { id: 'thecrashout', label: 'crashout', type: 'video', value: '/wallpapers/TheCrashoutAward.mp4' },
+  { id: 'memes', label: 'meme', type: 'video', value: '/wallpapers/MemesNo.mp4' },
 ];
 
 // Default theme settings
@@ -78,11 +92,23 @@ export function ThemeProvider({ children }) {
     root.style.setProperty('--color-primary-hover', accent.hover);
     root.style.setProperty('--color-primary-active', accent.active);
 
-    // Apply the wallpaper background color
+    // Apply the wallpaper - either a solid color or an image
     const wallpaper =
       WALLPAPER_OPTIONS.find((w) => w.id === theme.wallpaper) ||
       WALLPAPER_OPTIONS[0];
-    root.style.setProperty('--color-desktop-bg', wallpaper.value);
+    if (wallpaper.type === 'solid') {
+      root.style.setProperty('--color-desktop-bg', wallpaper.value);
+      root.style.setProperty('--wallpaper-image', 'none');
+    } else if (wallpaper.type === 'image') {
+      // For image wallpapers (gif, webp, etc.), use CSS background-image
+      root.style.setProperty('--color-desktop-bg', '#0c0c0c');
+      root.style.setProperty('--wallpaper-image', `url(${wallpaper.value})`);
+    } else if (wallpaper.type === 'video') {
+      // For video wallpapers, the <video> element in Desktop handles rendering
+      // Just set a dark fallback bg and clear any background image
+      root.style.setProperty('--color-desktop-bg', '#0c0c0c');
+      root.style.setProperty('--wallpaper-image', 'none');
+    }
 
     // Save to localStorage so it persists across page reloads
     localStorage.setItem('desktop-theme', JSON.stringify(theme));

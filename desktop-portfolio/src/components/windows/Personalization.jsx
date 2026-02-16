@@ -82,9 +82,30 @@ function Personalization() {
                   ? 'personalization__wallpaper-option--active'
                   : ''
               }`}
-              style={{ backgroundColor: wp.value }}
+              style={
+                wp.type === 'solid'
+                  ? { backgroundColor: wp.value }
+                  : wp.type === 'image'
+                    ? {
+                        backgroundImage: `url(${wp.value})`,
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                      }
+                    : { backgroundColor: '#1a1a1a', overflow: 'hidden' }
+              }
               onClick={() => setWallpaper(wp.id)}
             >
+              {/* Video wallpapers get a small preview video as thumbnail */}
+              {wp.type === 'video' && (
+                <video
+                  className="personalization__wallpaper-video"
+                  src={wp.value}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                />
+              )}
               <span className="personalization__wallpaper-label">
                 {wp.label}
               </span>
