@@ -19,12 +19,14 @@ import Projects from './windows/Projects';
 import Skills from './windows/Skills';
 import Contact from './windows/Contact';
 import Resume from './windows/Resume';
+import Personalization from './windows/Personalization';
 import {
   AboutMeIcon,
   ProjectsIcon,
   SkillsIcon,
   ContactIcon,
   ResumeIcon,
+  SettingsIcon,
 } from './icons/DesktopIcons';
 import '../styles/Desktop.css';
 
@@ -36,6 +38,7 @@ const WINDOW_CONTENT = {
   skills: <Skills />,
   contact: <Contact />,
   resume: <Resume />,
+  settings: <Personalization />,
 };
 
 // Configuration for all the desktop icons and their corresponding windows
@@ -46,6 +49,7 @@ const DESKTOP_APPS = [
   { id: 'skills', title: 'Skills', icon: <SkillsIcon /> },
   { id: 'contact', title: 'Contact', icon: <ContactIcon /> },
   { id: 'resume', title: 'Resume', icon: <ResumeIcon /> },
+  { id: 'settings', title: 'Settings', icon: <SettingsIcon /> },
 ];
 
 function Desktop() {
@@ -238,6 +242,10 @@ function Desktop() {
           onClose={() => setContextMenu(null)}
           onOpenAbout={() => {
             openWindow('about');
+            setContextMenu(null);
+          }}
+          onOpenSettings={() => {
+            openWindow('settings');
             setContextMenu(null);
           }}
         />

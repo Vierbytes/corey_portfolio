@@ -11,7 +11,7 @@
 import { useEffect, useRef } from 'react';
 import '../styles/ContextMenu.css';
 
-function ContextMenu({ x, y, onClose, onOpenAbout }) {
+function ContextMenu({ x, y, onClose, onOpenAbout, onOpenSettings }) {
   const menuRef = useRef(null);
 
   // Close when clicking outside or pressing Escape
@@ -62,7 +62,7 @@ function ContextMenu({ x, y, onClose, onOpenAbout }) {
 
       <div className="context-menu__divider" />
 
-      <button className="context-menu__item" onClick={onClose}>
+      <button className="context-menu__item" onClick={onOpenSettings}>
         Display settings
       </button>
       <button className="context-menu__item" onClick={onOpenAbout}>

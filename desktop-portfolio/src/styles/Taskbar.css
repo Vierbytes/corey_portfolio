@@ -41,12 +41,12 @@
 }
 
 .taskbar__start:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-hover-overlay);
 }
 
 /* Highlight when start menu is open */
 .taskbar__start--active {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--color-active-overlay);
 }
 
 .taskbar__start-icon {
@@ -82,12 +82,12 @@
 }
 
 .taskbar__window-btn:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-hover-overlay);
 }
 
 /* Active/focused window gets a highlight */
 .taskbar__window-btn--active {
-  background-color: rgba(255, 255, 255, 0.15);
+  background-color: var(--color-active-overlay);
 }
 
 /* Indicator line under the button for open windows */
@@ -154,7 +154,7 @@
 }
 
 .taskbar__clock:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background-color: var(--color-hover-overlay);
 }
 
 .taskbar__time {

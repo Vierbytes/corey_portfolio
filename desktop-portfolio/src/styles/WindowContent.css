@@ -76,7 +76,7 @@
 }
 
 .about-me__link:hover {
-  background-color: rgba(0, 120, 212, 0.1);
+  background-color: var(--color-tag-bg);
   border-color: var(--color-primary);
 }
 
@@ -244,7 +244,7 @@
 .project-card__tag {
   font-size: 11px;
   padding: 2px 8px;
-  background-color: rgba(0, 120, 212, 0.15);
+  background-color: var(--color-tag-bg);
   color: var(--color-primary);
   border-radius: 12px;
 }
@@ -371,7 +371,7 @@
 }
 
 .skills__status-text {
-  color: #4ec940;
+  color: var(--color-success);
 }
 
 /* ============================================
@@ -502,7 +502,7 @@
 
 .contact__sent-message {
   font-size: var(--font-size-small);
-  color: #4ec940;
+  color: var(--color-success);
 }
 
 .contact__error-message {
@@ -553,7 +553,7 @@
 /* Resume preview area - holds the embedded PDF */
 .resume__preview {
   flex: 1;
-  background-color: #2a2a2a;
+  background-color: var(--color-window-header);
   overflow: hidden;
 }
 
@@ -562,4 +562,125 @@
   width: 100%;
   height: 100%;
   border: none;
+}
+
+/* ============================================
+   PERSONALIZATION WINDOW
+   Settings page for theme, accent color, and wallpaper.
+   Styled to look like Windows Settings.
+   ============================================ */
+
+.personalization {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Each settings section (theme, accent, wallpaper) */
+.personalization__section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.personalization__section-title {
+  font-size: var(--font-size-large);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.personalization__section-desc {
+  font-size: var(--font-size-small);
+  color: var(--color-text-secondary);
+  margin: 0 0 4px;
+}
+
+/* Dark/Light toggle buttons */
+.personalization__toggle-group {
+  display: flex;
+  gap: 8px;
+}
+
+.personalization__toggle-btn {
+  padding: 8px 20px;
+  font-size: var(--font-size-normal);
+  color: var(--color-text-primary);
+  background-color: var(--color-window-header);
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.personalization__toggle-btn:hover {
+  background-color: var(--color-subtle-overlay);
+}
+
+/* Active toggle gets the accent color border */
+.personalization__toggle-btn--active {
+  border-color: var(--color-primary);
+  background-color: var(--color-tag-bg);
+}
+
+/* Accent color swatches - little circles in a row */
+.personalization__color-grid {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.personalization__color-swatch {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: 3px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.personalization__color-swatch:hover {
+  transform: scale(1.1);
+}
+
+/* Selected swatch gets a white/dark ring around it */
+.personalization__color-swatch--active {
+  border-color: var(--color-text-primary);
+  transform: scale(1.1);
+}
+
+/* Wallpaper option cards - grid of color previews */
+.personalization__wallpaper-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.personalization__wallpaper-option {
+  height: 64px;
+  border-radius: 8px;
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 6px;
+  transition: border-color var(--transition-fast);
+}
+
+.personalization__wallpaper-option:hover {
+  border-color: var(--color-border-light);
+}
+
+/* Selected wallpaper gets the accent color border */
+.personalization__wallpaper-option--active {
+  border-color: var(--color-primary);
+}
+
+/* Label text inside each wallpaper preview */
+.personalization__wallpaper-label {
+  font-size: 11px;
+  color: #ffffff;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }

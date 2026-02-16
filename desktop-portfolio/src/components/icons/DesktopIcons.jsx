@@ -124,6 +124,30 @@ export function ContactIcon({ size, className = '' }) {
   );
 }
 
+// Settings - gear icon (like Windows Settings)
+export function SettingsIcon({ size, className = '' }) {
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      width={size || '100%'}
+      height={size || '100%'}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {/* Outer gear shape */}
+      <path
+        d="M24 4l3.5 2.5L31 5l2 3.5 3.5.5.5 3.5L40.5 15 42 18.5l-2 3L42 25l-2.5 3 1 3.5-3 2-.5 3.5-3.5.5-2 3.5-3.5-1L24 44l-3.5-2.5L17 43l-2-3.5-3.5-.5-.5-3.5L7.5 33 6 29.5l2-3L6 23l2.5-3-1-3.5 3-2 .5-3.5 3.5-.5 2-3.5 3.5 1L24 4z"
+        fill="#6E6E6E"
+      />
+      {/* Inner circle of the gear */}
+      <circle cx="24" cy="24" r="8" fill="#4A90D9" />
+      {/* Center dot */}
+      <circle cx="24" cy="24" r="4" fill="#1E1E1E" />
+    </svg>
+  );
+}
+
 // Resume - document/page icon (like a text file)
 export function ResumeIcon({ size, className = '' }) {
   return (

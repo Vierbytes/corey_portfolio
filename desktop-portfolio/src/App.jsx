@@ -9,6 +9,7 @@
 import { useState } from 'react';
 import Desktop from './components/Desktop';
 import BootScreen from './components/BootScreen';
+import { ThemeProvider } from './context/ThemeContext';
 
 function App() {
   // Start with the boot animation showing
@@ -19,7 +20,12 @@ function App() {
     return <BootScreen onComplete={() => setIsBooting(false)} />;
   }
 
-  return <Desktop />;
+  // ThemeProvider wraps Desktop so all components can access theme settings
+  return (
+    <ThemeProvider>
+      <Desktop />
+    </ThemeProvider>
+  );
 }
 
 export default App;
