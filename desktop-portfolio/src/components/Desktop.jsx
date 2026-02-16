@@ -10,6 +10,7 @@
 */
 
 import { useState } from 'react';
+import { useTheme, WALLPAPER_OPTIONS } from '../context/ThemeContext';
 import Window from './Window';
 import Taskbar from './Taskbar';
 import StartMenu from './StartMenu';
@@ -53,6 +54,11 @@ const DESKTOP_APPS = [
 ];
 
 function Desktop() {
+  // Get current theme to check if we need a video wallpaper
+  const { theme } = useTheme();
+  const currentWallpaper = WALLPAPER_OPTIONS.find((w) => w.id === theme.wallpaper);
+  const isVideoWallpaper = currentWallpaper?.type === 'video';
+
   // State to track all open windows
   // Each window object has: id, title, icon, position, size, isMinimized, isMaximized
   const [windows, setWindows] = useState([]);
@@ -187,6 +193,18 @@ function Desktop() {
           setShowStartMenu(false);
         }}
       >
+        {/* Video wallpaper - renders a looping video behind everything */}
+        {isVideoWallpaper && (
+          <video
+            className="desktop__video-wallpaper"
+            src={currentWallpaper.value}
+            autoPlay
+            loop
+            muted
+            playsInline
+          />
+        )}
+
         {/* Desktop Icons */}
         <div className="desktop__icons">
           {DESKTOP_APPS.map((app) => (
