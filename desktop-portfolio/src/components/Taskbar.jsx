@@ -11,12 +11,24 @@
 
   The start button now opens the start menu - it calls onStartClick
   which is handled by the Desktop component.
+
+  On mobile, the taskbar simplifies to just a back button and clock.
+  No start menu or window buttons since the icons are already the
+  home screen and only one window shows at a time.
 */
 
 import { useState, useEffect } from 'react';
 import '../styles/Taskbar.css';
 
-function Taskbar({ windows, focusedWindowId, onWindowClick, onStartClick, isStartMenuOpen }) {
+function Taskbar({
+  windows,
+  focusedWindowId,
+  onWindowClick,
+  onStartClick,
+  isStartMenuOpen,
+  isMobile,
+  onBackClick,
+}) {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // Update the clock every second
@@ -47,6 +59,31 @@ function Taskbar({ windows, focusedWindowId, onWindowClick, onStartClick, isStar
     });
   };
 
+  // Mobile taskbar - simplified with just a back button and clock
+  if (isMobile) {
+    return (
+      <div className="taskbar taskbar--mobile no-select">
+        <button
+          className="taskbar__back-btn"
+          onClick={onBackClick}
+          aria-label="Back to home"
+        >
+          {/* Simple back/home arrow */}
+          <svg viewBox="0 0 24 24" fill="currentColor">
+            <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" />
+          </svg>
+        </button>
+
+        <div className="taskbar__tray">
+          <div className="taskbar__clock">
+            <span className="taskbar__time">{formatTime(currentTime)}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // Desktop taskbar - full version with start menu, window buttons, clock
   return (
     <div className="taskbar no-select">
       {/* Start button - opens the start menu */}

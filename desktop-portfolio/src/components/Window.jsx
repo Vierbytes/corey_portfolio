@@ -41,6 +41,7 @@ function Window({
   zIndex,
   isMinimized,
   isMaximized,
+  isMobile,
   isFocused,
   onFocus,
   onClose,
@@ -83,6 +84,7 @@ function Window({
     isFocused && 'window--focused',
     isMaximized && 'window--maximized',
     isMinimized && 'window--minimized',
+    isMobile && 'window--mobile',
   ]
     .filter(Boolean)
     .join(' ');
@@ -229,7 +231,10 @@ function Window({
       onMouseDown={onFocus}
     >
       {/* Window Header (title bar) - drag handle + double-click to maximize */}
-      <div className="window__header no-select" onDoubleClick={onMaximize}>
+      <div
+        className="window__header no-select"
+        onDoubleClick={isMobile ? undefined : onMaximize}
+      >
         <div className="window__title">
           <span className="window__title-icon">{icon}</span>
           <span>{title}</span>
@@ -285,8 +290,9 @@ function Window({
         )}
       </div>
 
-      {/* Resize handles - each edge and corner can be dragged to resize */}
-      {!isMaximized && (
+      {/* Resize handles - each edge and corner can be dragged to resize
+         Hidden on mobile since windows are always full-screen */}
+      {!isMaximized && !isMobile && (
         <>
           <div
             className="window__resize-handle window__resize-handle--n"
@@ -325,8 +331,9 @@ function Window({
     </div>
   );
 
-  // If maximized, don't wrap with Draggable (can't drag a maximized window)
-  if (isMaximized) {
+  // If maximized or mobile, don't wrap with Draggable
+  // Mobile windows are always full-screen, no need for dragging
+  if (isMaximized || isMobile) {
     return windowContent;
   }
 

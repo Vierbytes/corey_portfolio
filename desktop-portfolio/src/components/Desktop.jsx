@@ -11,6 +11,7 @@
 
 import { useState } from 'react';
 import { useTheme, WALLPAPER_OPTIONS } from '../context/ThemeContext';
+import useIsMobile from '../hooks/useIsMobile';
 import Window from './Window';
 import Taskbar from './Taskbar';
 import StartMenu from './StartMenu';
@@ -54,6 +55,9 @@ const DESKTOP_APPS = [
 ];
 
 function Desktop() {
+  // Check if we're on a mobile viewport
+  const isMobile = useIsMobile();
+
   // Get current theme to check if we need a video wallpaper
   const { theme } = useTheme();
   const currentWallpaper = WALLPAPER_OPTIONS.find((w) => w.id === theme.wallpaper);
@@ -185,6 +189,8 @@ function Desktop() {
       <div
         className="desktop"
         onContextMenu={(e) => {
+          // No context menu on mobile - touch doesn't have right-click
+          if (isMobile) return;
           // Only show context menu when right-clicking the desktop background
           // not when right-clicking inside a window or on an icon
           if (e.target.closest('.window') || e.target.closest('.desktop-icon')) return;
@@ -211,7 +217,8 @@ function Desktop() {
             <button
               key={app.id}
               className="desktop-icon no-select"
-              onDoubleClick={() => openWindow(app.id)}
+              onDoubleClick={isMobile ? undefined : () => openWindow(app.id)}
+              onClick={isMobile ? () => openWindow(app.id) : undefined}
             >
               <div className="desktop-icon__image">{app.icon}</div>
               <span className="desktop-icon__label">{app.title}</span>
@@ -225,6 +232,7 @@ function Desktop() {
             <Window
               key={window.id}
               {...window}
+              isMobile={isMobile}
               isFocused={focusedWindowId === window.id}
               onFocus={() => focusWindow(window.id)}
               onClose={() => closeWindow(window.id)}
@@ -240,8 +248,8 @@ function Desktop() {
         </div>
       </div>
 
-      {/* Start Menu - shows when the start button is clicked */}
-      {showStartMenu && (
+      {/* Start Menu - shows when the start button is clicked (desktop only) */}
+      {!isMobile && showStartMenu && (
         <StartMenu
           apps={DESKTOP_APPS}
           onAppClick={(id) => {
@@ -252,8 +260,8 @@ function Desktop() {
         />
       )}
 
-      {/* Right-click Context Menu */}
-      {contextMenu && (
+      {/* Right-click Context Menu (desktop only) */}
+      {!isMobile && contextMenu && (
         <ContextMenu
           x={contextMenu.x}
           y={contextMenu.y}
@@ -273,6 +281,13 @@ function Desktop() {
       <Taskbar
         windows={windows}
         focusedWindowId={focusedWindowId}
+        isMobile={isMobile}
+        onBackClick={() => {
+          // Mobile back button - close the focused window
+          if (focusedWindowId) {
+            closeWindow(focusedWindowId);
+          }
+        }}
         onStartClick={() => {
           setShowStartMenu(!showStartMenu);
           setContextMenu(null);
