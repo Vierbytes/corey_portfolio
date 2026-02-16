@@ -232,3 +232,57 @@
   height: 12px;
   cursor: sw-resize;
 }
+
+/*
+  Mobile Full-Screen Window
+
+  On phones, windows take up the entire screen instead of being
+  draggable floating panels. No resize handles, no border radius,
+  no shadow. Only the close button shows (min/max hidden via CSS).
+
+  Using 100dvh (dynamic viewport height) because iOS Safari's 100vh
+  includes the URL bar, which would leave a gap at the bottom.
+*/
+
+.window--mobile {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: calc(100dvh - var(--taskbar-height)) !important;
+  border-radius: 0;
+  transform: none !important;
+  min-width: 0;
+  min-height: 0;
+  box-shadow: none;
+}
+
+/* Fallback for browsers that don't support dvh */
+@supports not (height: 100dvh) {
+  .window--mobile {
+    height: calc(100vh - var(--taskbar-height)) !important;
+  }
+}
+
+.window--mobile .window__header {
+  cursor: default;
+  border-radius: 0;
+}
+
+.window--mobile .window__header:active {
+  cursor: default;
+}
+
+/* Hide minimize and maximize buttons on mobile - only close button */
+.window--mobile .window__control-btn:not(.window__control-btn--close) {
+  display: none;
+}
+
+/* Bigger close button for touch targets */
+.window--mobile .window__control-btn--close {
+  width: 56px;
+}
+
+.window--mobile .window__content {
+  border-radius: 0;
+}

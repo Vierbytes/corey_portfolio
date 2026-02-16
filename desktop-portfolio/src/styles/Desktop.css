@@ -134,3 +134,31 @@
 .desktop__windows .window {
   pointer-events: auto;
 }
+
+/*
+  Mobile Layout
+
+  On phones, the desktop icons switch from a column-flow grid
+  (like a real desktop) to a centered 3-column grid that's more
+  like a phone home screen. Single tap opens apps instead of
+  double-click.
+*/
+@media (max-width: 767px) {
+  .desktop__icons {
+    position: static;
+    display: grid;
+    grid-auto-flow: row;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    justify-items: center;
+    align-content: start;
+    padding: 24px 16px;
+    max-height: 100%;
+    overflow-y: auto;
+    gap: 20px;
+  }
+
+  .desktop-icon {
+    width: auto;
+  }
+}

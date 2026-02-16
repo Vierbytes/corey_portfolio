@@ -700,3 +700,46 @@
   color: #ffffff;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.8);
 }
+
+/* ============================================
+   MOBILE RESPONSIVE ADJUSTMENTS
+   Reflows content layouts for smaller screens.
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* About Me: stack photo above text instead of side-by-side */
+  .about-me__profile {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .about-me__links {
+    justify-content: center;
+  }
+
+  /* Highlights stack vertically on mobile */
+  .about-me__highlights {
+    flex-direction: column;
+  }
+
+  /* Projects: single column cards */
+  .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  /* Wallpaper grid: 2 columns instead of 3 on mobile */
+  .personalization__wallpaper-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* Set inputs to 16px to prevent iOS auto-zoom on focus */
+  .contact__input,
+  .contact__textarea {
+    font-size: 16px;
+  }
+
+  .contact__send-btn {
+    padding: 12px 24px;
+    font-size: var(--font-size-normal);
+  }
+}

@@ -167,3 +167,41 @@
   font-size: 11px;
   color: var(--color-text-secondary);
 }
+
+/*
+  Mobile Taskbar
+
+  On phones, the taskbar simplifies to just a back button (left)
+  and the clock (right). No start menu or window buttons since
+  icons are already visible as the home screen.
+*/
+
+.taskbar--mobile {
+  justify-content: space-between;
+  padding: 0 16px;
+}
+
+.taskbar__back-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  color: var(--color-text-primary);
+  transition: background-color var(--transition-fast);
+}
+
+.taskbar__back-btn:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.taskbar__back-btn svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* Hide the date on mobile - just show time to save space */
+.taskbar--mobile .taskbar__date {
+  display: none;
+}

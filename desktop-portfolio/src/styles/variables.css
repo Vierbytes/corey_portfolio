@@ -108,3 +108,17 @@
   --color-success: #2ea121;
   --color-tag-bg: rgba(0, 120, 212, 0.1);
 }
+
+/*
+  Mobile Overrides
+
+  On smaller screens, we bump up some sizes for better touch targets.
+  768px is the standard tablet/mobile breakpoint.
+*/
+@media (max-width: 767px) {
+  :root {
+    --taskbar-height: 56px;
+    --icon-size: 56px;
+    --icon-grid-gap: 16px;
+  }
+}
