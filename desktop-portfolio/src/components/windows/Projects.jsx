@@ -106,6 +106,22 @@ const PROJECTS = [
       { label: 'Repository', url: 'https://github.com/Vierbytes/personal-blog-sba' },
     ],
   },
+  {
+    id: 6,
+    title: 'PokeDem',
+    description:
+      'Digital Pokedex app for searching and browsing Pokemon with filtering and sorting controls.',
+    tech: ['JavaScript', 'HTML', 'CSS', 'PokeAPI'],
+    image: '/projects/pokedem.png',
+    highlights: [
+      'Implemented search, type filtering, and sorting to quickly find specific Pokemon entries.',
+      'Built responsive card-based UI for readable stats, types, and move summaries.',
+    ],
+    liveUrl: 'https://pokedem.vercel.app/',
+    githubUrls: [
+      { label: 'Repository', url: 'https://github.com/Vierbytes/pokedem' },
+    ],
+  },
 ];
 
 function Projects() {
