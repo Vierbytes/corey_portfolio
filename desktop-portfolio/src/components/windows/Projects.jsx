@@ -14,13 +14,13 @@
   githubUrls field is an array of objects with a label and url.
 */
 
-// My actual projects - add more as I build them
+// Portfolio projects with concise impact-focused summaries
 const PROJECTS = [
   {
     id: 1,
     title: 'CardVault',
     description:
-      'A full-stack TCG marketplace where users can browse, buy, and sell trading cards. Features card scanning via Google Cloud Vision API, image uploads with Cloudinary, and real-time card data from the PokemonTCG and TCGdex APIs. Includes user authentication with Auth0 and JWT.',
+      'Full-stack TCG marketplace where users can browse, buy, and sell trading cards.',
     tech: [
       'React',
       'Node.js',
@@ -32,10 +32,78 @@ const PROJECTS = [
       'Google Cloud Vision',
     ],
     image: '/cv_home.png',
+    highlights: [
+      'Designed and shipped an end-to-end marketplace workflow from listing to checkout.',
+      'Integrated third-party APIs and media processing for richer card data and uploads.',
+    ],
     liveUrl: 'https://card-vault-teal.vercel.app/',
     githubUrls: [
       { label: 'Frontend', url: 'https://github.com/Vierbytes/card-vault' },
       { label: 'Backend', url: 'https://github.com/Vierbytes/card-vault-be' },
+    ],
+  },
+  {
+    id: 2,
+    title: 'Desktop Portfolio OS',
+    description:
+      'Interactive desktop-style portfolio with draggable windows, taskbar workflows, and theme personalization.',
+    tech: ['React', 'Vite', 'Context API', 'CSS', 'react-draggable'],
+    image: '/projects/desktop-portfolio-os.png',
+    highlights: [
+      'Built reusable window management patterns for open, focus, minimize, maximize, and resize.',
+      'Implemented mobile-specific UX behavior while preserving desktop interaction patterns.',
+    ],
+    liveUrl: 'https://corey-portfolio-henna.vercel.app/',
+    githubUrls: [
+      { label: 'Repository', url: 'https://github.com/Vierbytes/corey_portfolio' },
+    ],
+  },
+  {
+    id: 3,
+    title: 'React Taskboard',
+    description:
+      'Dashboard-style taskboard focused on organizing workflow state in a clean React UI.',
+    tech: ['React', 'TypeScript', 'CSS'],
+    image: '/projects/react-taskboard.png',
+    highlights: [
+      'Practiced component composition for dashboard views and reusable task elements.',
+      'Strengthened TypeScript fundamentals for safer state and props management.',
+    ],
+    liveUrl: 'https://react-taskboard.netlify.app/',
+    githubUrls: [
+      { label: 'Repository', url: 'https://github.com/Vierbytes/react-taskboard' },
+    ],
+  },
+  {
+    id: 4,
+    title: 'IP Address Tracker',
+    description:
+      'Web app project centered on looking up and displaying IP address information.',
+    tech: ['JavaScript', 'HTML', 'CSS'],
+    image: '/projects/ip-address-tracker.png',
+    highlights: [
+      'Built practical data-display UI patterns around user input and lookup results.',
+      'Focused on building a responsive interface and clear information layout.',
+    ],
+    liveUrl: 'https://ip-pin.netlify.app/',
+    githubUrls: [
+      { label: 'Repository', url: 'https://github.com/Vierbytes/ip-address-tracker' },
+    ],
+  },
+  {
+    id: 5,
+    title: 'Personal Blog Platform',
+    description:
+      'Interactive client-side blog platform with full CRUD flows and local data persistence.',
+    tech: ['JavaScript', 'HTML', 'CSS', 'LocalStorage'],
+    image: '/projects/personal-blog-platform.png',
+    highlights: [
+      'Implemented create, edit, and delete workflows with client-side state management.',
+      'Added validation, persistence, and responsive UI patterns for a complete UX flow.',
+    ],
+    liveUrl: 'https://vierbytes.github.io/personal-blog-sba/',
+    githubUrls: [
+      { label: 'Repository', url: 'https://github.com/Vierbytes/personal-blog-sba' },
     ],
   },
 ];
@@ -71,6 +139,13 @@ function Projects() {
             <div className="project-card__body">
               <h3 className="project-card__title">{project.title}</h3>
               <p className="project-card__description">{project.description}</p>
+              {project.highlights?.length > 0 && (
+                <ul className="project-card__highlights">
+                  {project.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+              )}
 
               {/* Tech tags */}
               <div className="project-card__tech">
@@ -83,14 +158,16 @@ function Projects() {
 
               {/* Links to live site and GitHub repos */}
               <div className="project-card__links">
-                <a
-                  href={project.liveUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-card__link"
-                >
-                  🔗 Live Site
-                </a>
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="project-card__link"
+                  >
+                    🔗 Live Site
+                  </a>
+                )}
                 {project.githubUrls.map((repo) => (
                   <a
                     key={repo.label}

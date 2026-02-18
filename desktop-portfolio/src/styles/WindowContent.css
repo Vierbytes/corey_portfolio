@@ -227,11 +227,18 @@
   color: var(--color-text-secondary);
   line-height: 1.5;
   margin: 0;
-  /* Clamp to 3 lines so cards stay consistent height */
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+}
+
+.project-card__highlights {
+  margin: 0;
+  padding-left: 18px;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+  line-height: 1.45;
+}
+
+.project-card__highlights li + li {
+  margin-top: 4px;
 }
 
 /* Tech tags - little pills showing what tech was used */
