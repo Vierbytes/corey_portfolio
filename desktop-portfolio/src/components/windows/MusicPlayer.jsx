@@ -89,7 +89,12 @@ async function spotifyApi(path, accessToken, options = {}) {
   });
 
   if (res.status === 204) return null;
-  if (!res.ok) throw new Error(`Spotify API error (${res.status})`);
+  if (!res.ok) {
+    const err = new Error(`Spotify API error (${res.status})`);
+    err.status = res.status;
+    err.retryAfter = Number(res.headers.get('retry-after') || 0);
+    throw err;
+  }
 
   const contentType = res.headers.get('content-type') || '';
   if (contentType.includes('application/json')) return res.json();
@@ -123,6 +128,15 @@ async function hydratePlaylistTotals(items = [], token) {
 
     return { ...playlist, trackTotal };
   });
+}
+
+function getSettledValue(result) {
+  return result?.status === 'fulfilled' ? result.value : null;
+}
+
+function getRateLimitError(results = []) {
+  const rejected = results.find((r) => r?.status === 'rejected' && r.reason?.status === 429);
+  return rejected?.reason || null;
 }
 
 function MusicPlayer() {
@@ -213,12 +227,17 @@ function MusicPlayer() {
     setIsLoading(true);
     setError('');
     try {
-      const [me, playback, top, userPlaylists] = await Promise.all([
+      const results = await Promise.allSettled([
         spotifyApi('/me', token),
         spotifyApi('/me/player', token),
         spotifyApi('/me/top/tracks?limit=8&time_range=short_term', token),
         spotifyApi('/me/playlists?limit=8', token),
       ]);
+
+      const me = getSettledValue(results[0]);
+      const playback = getSettledValue(results[1]);
+      const top = getSettledValue(results[2]);
+      const userPlaylists = getSettledValue(results[3]);
 
       setProfile(me);
       setHasPremium(me?.product === 'premium');
@@ -230,6 +249,14 @@ function MusicPlayer() {
       const playlistItems = userPlaylists?.items || [];
       const playlistsWithTotals = await hydratePlaylistTotals(playlistItems, token);
       setPlaylists(playlistsWithTotals);
+
+      const rateLimitErr = getRateLimitError(results);
+      if (rateLimitErr) {
+        const waitText = rateLimitErr.retryAfter
+          ? ` Try again in ${rateLimitErr.retryAfter}s.`
+          : ' Try again in a moment.';
+        setError(`Spotify rate limit reached.${waitText}`);
+      }
     } catch (err) {
       setError(err.message || 'Failed to load Spotify data.');
     } finally {
