@@ -181,3 +181,25 @@ export function ResumeIcon({ size, className = '' }) {
     </svg>
   );
 }
+
+// Music - vinyl/disc icon
+export function MusicIcon({ size, className = '' }) {
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      width={size || '100%'}
+      height={size || '100%'}
+      className={className}
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <circle cx="24" cy="24" r="20" fill="#1DB954" />
+      <circle cx="24" cy="24" r="6" fill="#0f172a" />
+      <circle cx="24" cy="24" r="2" fill="#93c5fd" />
+      <path
+        d="M31 10a1.5 1.5 0 013 0v16.5a4.5 4.5 0 11-3-4.243V10z"
+        fill="#0f172a"
+      />
+    </svg>
+  );
+}

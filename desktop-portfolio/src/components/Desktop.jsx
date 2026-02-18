@@ -22,6 +22,7 @@ import Skills from './windows/Skills';
 import Contact from './windows/Contact';
 import Resume from './windows/Resume';
 import Personalization from './windows/Personalization';
+import MusicPlayer from './windows/MusicPlayer';
 import {
   AboutMeIcon,
   ProjectsIcon,
@@ -29,6 +30,7 @@ import {
   ContactIcon,
   ResumeIcon,
   SettingsIcon,
+  MusicIcon,
 } from './icons/DesktopIcons';
 import '../styles/Desktop.css';
 
@@ -41,6 +43,7 @@ const WINDOW_CONTENT = {
   contact: <Contact />,
   resume: <Resume />,
   settings: <Personalization />,
+  music: <MusicPlayer />,
 };
 
 // Configuration for all the desktop icons and their corresponding windows
@@ -51,6 +54,7 @@ const DESKTOP_APPS = [
   { id: 'skills', title: 'Skills', icon: <SkillsIcon /> },
   { id: 'contact', title: 'Contact', icon: <ContactIcon /> },
   { id: 'resume', title: 'Resume', icon: <ResumeIcon /> },
+  { id: 'music', title: 'Music Player', icon: <MusicIcon /> },
   { id: 'settings', title: 'Settings', icon: <SettingsIcon /> },
 ];
 

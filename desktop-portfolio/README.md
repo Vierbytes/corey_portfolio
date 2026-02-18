@@ -44,3 +44,17 @@ Interactive desktop-style portfolio built with React and Vite. The app simulates
 npm install
 npm run dev
 ```
+
+## Spotify Music Player Setup
+
+The Music Player window uses Spotify OAuth (PKCE). Add these variables in a `.env` file:
+
+```bash
+VITE_SPOTIFY_CLIENT_ID=your_spotify_app_client_id
+VITE_SPOTIFY_REDIRECT_URI=http://localhost:5173/
+```
+
+In your Spotify Developer app settings, add these redirect URIs:
+
+- `http://localhost:5173/`
+- your production URL (for example `https://corey-portfolio-henna.vercel.app/`)

@@ -709,6 +709,232 @@
 }
 
 /* ============================================
+   MUSIC PLAYER WINDOW
+   ============================================ */
+
+.music-player {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.music-player__header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  padding: 12px;
+  background-color: var(--color-window-header);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+}
+
+.music-player__title {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: 18px;
+}
+
+.music-player__text {
+  margin: 6px 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+  line-height: 1.45;
+}
+
+.music-player__actions {
+  display: flex;
+  gap: 8px;
+}
+
+.music-player__btn {
+  border: 1px solid var(--color-primary);
+  background-color: var(--color-primary);
+  color: #fff;
+  border-radius: 6px;
+  font-size: var(--font-size-small);
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.music-player__btn:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.music-player__btn--ghost {
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+  background-color: transparent;
+}
+
+.music-player__btn--ghost:hover {
+  background-color: var(--color-hover-overlay);
+}
+
+.music-player__btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.music-player__error {
+  margin: 0;
+  color: var(--color-close-btn);
+  font-size: var(--font-size-small);
+}
+
+.music-player__content {
+  display: grid;
+  grid-template-columns: minmax(240px, 1fr) minmax(240px, 1fr);
+  gap: 12px;
+}
+
+.music-player__panel {
+  background-color: var(--color-window-header);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.music-player__panel-title {
+  margin: 0 0 10px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-normal);
+}
+
+.music-player__panel-title--spaced {
+  margin-top: 14px;
+}
+
+.music-player__track {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 8px;
+  background-color: var(--color-desktop-bg);
+}
+
+.music-player__cover {
+  width: 64px;
+  height: 64px;
+  border-radius: 6px;
+  object-fit: cover;
+}
+
+.music-player__track-name {
+  margin: 0;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-normal);
+}
+
+.music-player__track-meta {
+  margin: 4px 0 0;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-small);
+}
+
+.music-player__controls {
+  margin-top: 10px;
+  display: flex;
+  gap: 8px;
+}
+
+.music-player__control {
+  border: 1px solid var(--color-border);
+  color: var(--color-text-primary);
+  background-color: var(--color-desktop-bg);
+  border-radius: 6px;
+  width: 40px;
+  height: 34px;
+  cursor: pointer;
+}
+
+.music-player__control:hover {
+  border-color: var(--color-primary);
+}
+
+.music-player__control:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.music-player__seek,
+.music-player__volume {
+  margin-top: 10px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 8px;
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+.music-player__volume {
+  grid-template-columns: auto 1fr;
+}
+
+.music-player__list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.music-player__search {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.music-player__search input {
+  width: 100%;
+  background-color: var(--color-desktop-bg);
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  color: var(--color-text-primary);
+  font-size: var(--font-size-small);
+  padding: 8px 10px;
+}
+
+.music-player__search input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+}
+
+.music-player__list-item {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  padding: 8px 10px;
+  background-color: var(--color-desktop-bg);
+  cursor: pointer;
+}
+
+.music-player__list-item:hover {
+  border-color: var(--color-primary);
+}
+
+.music-player__list-item:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.music-player__list-title {
+  color: var(--color-text-primary);
+  font-size: var(--font-size-small);
+}
+
+.music-player__list-meta {
+  color: var(--color-text-secondary);
+  font-size: 11px;
+}
+
+/* ============================================
    MOBILE RESPONSIVE ADJUSTMENTS
    Reflows content layouts for smaller screens.
    ============================================ */
@@ -731,6 +957,14 @@
 
   /* Projects: single column cards */
   .projects__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .music-player__header {
+    flex-direction: column;
+  }
+
+  .music-player__content {
     grid-template-columns: 1fr;
   }
 
